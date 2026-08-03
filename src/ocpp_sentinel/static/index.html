@@ -21,20 +21,33 @@
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
                 </div>
-                <span class="nav-title">OCPP Sentinel</span>
+                <div class="nav-brand">
+                    <span class="nav-title">OCPP Sentinel</span>
+                    <span class="nav-version">SOC Copilot v1.0</span>
+                </div>
             </div>
             <div class="nav-right">
-                <span class="nav-clock" id="live-clock">00:00:00 UTC</span>
-                <span class="nav-badge" id="kb-count">70 vectors</span>
-                <span class="nav-status" id="health-pill">
+                <div class="nav-pill" title="Live UTC Clock">
+                    <span class="pill-icon">🕒</span>
+                    <span class="nav-clock" id="live-clock">00:00:00 UTC</span>
+                </div>
+                <div class="nav-pill pill-blue" title="Indexed Knowledge Base">
+                    <span class="pill-icon">🧠</span>
+                    <span id="kb-count">70 vectors</span>
+                </div>
+                <div class="nav-pill pill-green" id="health-pill">
                     <span class="status-dot"></span>
-                    Active
-                </span>
+                    <span>System Active</span>
+                </div>
             </div>
         </nav>
 
         <!-- Hero Section -->
         <section class="hero">
+            <div class="hero-badge">
+                <span class="hb-icon">🛡️</span>
+                <span>EV Charging Infrastructure • STRIDE Threat Triage</span>
+            </div>
             <h1 class="hero-title">AI Security Triage<br>for EV Charging.</h1>
             <p class="hero-subtitle">Real-time triage of OCPP 1.6-J protocol traffic against STRIDE threat vectors using deterministic rule engines and ChromaDB RAG vector search.</p>
         </section>
