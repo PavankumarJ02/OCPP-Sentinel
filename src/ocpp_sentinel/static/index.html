@@ -3,117 +3,370 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OCPP Sentinel — AI Security Triage Copilot</title>
+    <title>OCPP Sentinel — AI Security Copilot for EV Charging</title>
     <link rel="stylesheet" href="/static/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Header -->
-        <header class="navbar">
-            <div class="brand">
-                <span class="shield-icon">🛡️</span>
-                <div>
-                    <h1>OCPP Sentinel</h1>
-                    <p class="subtitle">AI Security Triage Copilot for EV Charging Stations</p>
-                </div>
-            </div>
-            <div class="status-badge" id="health-badge">
-                <span class="status-dot"></span>
-                <span id="health-text">Connecting...</span>
-            </div>
-        </header>
 
-        <!-- Main Dashboard -->
-        <main class="main-content">
-            <!-- Left Column: Input Panel & Preset Scenarios -->
-            <section class="panel input-panel">
-                <div class="panel-header">
-                    <h2>📥 OCPP Message Input</h2>
-                    <span class="spec-tag">OCPP 1.6-J</span>
-                </div>
+    <div class="app">
 
-                <div class="presets-section">
-                    <p class="section-label">Select a Preset Scenario to Test:</p>
-                    <div class="preset-buttons">
-                        <button class="btn btn-preset" onclick="loadSample('benign_authorize')">✅ Benign Authorize</button>
-                        <button class="btn btn-preset" onclick="loadSample('benign_meter_values')">✅ Benign MeterValues</button>
-                        <button class="btn btn-preset attack" onclick="loadSample('malicious_spoofing')">⚠️ 1. Spoofing</button>
-                        <button class="btn btn-preset attack" onclick="loadSample('malicious_tampering')">⚠️ 2. Tampering</button>
-                        <button class="btn btn-preset attack" onclick="loadSample('malicious_repudiation')">⚠️ 3. Repudiation</button>
-                        <button class="btn btn-preset attack" onclick="loadSample('malicious_info_disclosure')">⚠️ 4. Info Disclosure</button>
-                        <button class="btn btn-preset attack" onclick="loadSample('malicious_dos')">⚠️ 5. DoS Flood</button>
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-left">
+                <div class="nav-logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <span class="nav-title">OCPP Sentinel</span>
+            </div>
+            <div class="nav-right">
+                <span class="nav-clock" id="live-clock">00:00:00 UTC</span>
+                <span class="nav-badge" id="kb-count">70 vectors</span>
+                <span class="nav-status" id="health-pill">
+                    <span class="status-dot"></span>
+                    Active
+                </span>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">AI Security Triage<br>for EV Charging.</h1>
+            <p class="hero-subtitle">Analyze OCPP 1.6-J protocol messages against STRIDE threat patterns using hybrid rule engines and RAG-grounded vector retrieval.</p>
+        </section>
+
+        <!-- Architecture Pipeline Flowchart -->
+        <section class="arch-section">
+            <div class="section-label" style="text-align:center">Architecture</div>
+            <h2 class="arch-heading">Three-Stage AI Pipeline</h2>
+            <p class="arch-desc">Every OCPP message flows through a LangGraph state machine combining deterministic rule engines with neural vector search for grounded security verdicts.</p>
+
+            <div class="pipeline">
+                <div class="pipe-node pipe-input" data-hover>
+                    <div class="pipe-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 13h4"/></svg>
                     </div>
+                    <div class="pipe-label">OCPP Message</div>
+                    <div class="pipe-sub">JSON Payload</div>
                 </div>
 
-                <div class="editor-container">
-                    <label for="json-input" class="section-label">OCPP Message Payload (JSON):</label>
-                    <textarea id="json-input" placeholder="Paste your OCPP message JSON here..." spellcheck="false"></textarea>
+                <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
+
+                <div class="pipe-node pipe-validate" data-hover>
+                    <div class="pipe-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div class="pipe-label">Pydantic V2</div>
+                    <div class="pipe-sub">Schema Check</div>
                 </div>
 
-                <div class="action-bar">
-                    <button class="btn btn-primary" id="analyze-btn" onclick="analyzeMessage()">
-                        <span id="btn-text">⚡ Analyze Message</span>
+                <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
+
+                <div class="pipe-node pipe-detect" data-hover>
+                    <div class="pipe-icon pipe-icon-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    </div>
+                    <div class="pipe-stage-tag">Stage 1</div>
+                    <div class="pipe-label">Detect</div>
+                    <div class="pipe-sub">5 STRIDE Rules</div>
+                    <div class="pipe-details">Spoofing · Tampering · Repudiation · Info Leak · DoS</div>
+                </div>
+
+                <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
+
+                <div class="pipe-node pipe-retrieve" data-hover>
+                    <div class="pipe-icon pipe-icon-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    </div>
+                    <div class="pipe-stage-tag">Stage 2</div>
+                    <div class="pipe-label">Retrieve</div>
+                    <div class="pipe-sub">ChromaDB Vector Store</div>
+                    <div class="pipe-details">70 indexed chunks · all-MiniLM-L6-v2 embeddings</div>
+                </div>
+
+                <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
+
+                <div class="pipe-node pipe-reason" data-hover>
+                    <div class="pipe-icon pipe-icon-blue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/><path d="M10 21h4"/></svg>
+                    </div>
+                    <div class="pipe-stage-tag">Stage 3</div>
+                    <div class="pipe-label">Reason</div>
+                    <div class="pipe-sub">Grounded Synthesis</div>
+                    <div class="pipe-details">Explanation · Confidence score · Source citation</div>
+                </div>
+
+                <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
+
+                <div class="pipe-node pipe-output" data-hover>
+                    <div class="pipe-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    </div>
+                    <div class="pipe-label">Verdict</div>
+                    <div class="pipe-sub">JSON + Audit Trail</div>
+                </div>
+            </div>
+
+            <div class="tech-strip">
+                <span class="tech-tag highlight-rag">RAG Architecture</span>
+                <span class="tech-tag">ChromaDB Vector Store</span>
+                <span class="tech-tag">LangGraph State Machine</span>
+                <span class="tech-tag">STRIDE Threat Model</span>
+                <span class="tech-tag">Python 3.11+</span>
+                <span class="tech-tag">FastAPI</span>
+                <span class="tech-tag">Pydantic V2</span>
+                <span class="tech-tag">70/70 Pytest Suite</span>
+            </div>
+
+            <div class="rag-features-grid">
+                <div class="rag-feature-card" data-hover>
+                    <div class="rf-icon">🧠</div>
+                    <h3 class="rf-title">RAG Grounded Retrieval</h3>
+                    <p class="rf-desc">Queries 70 indexed chunks of official OCPP 1.6-J specs and threat papers using <code>all-MiniLM-L6-v2</code> embeddings and cosine similarity. Guarantees zero-hallucination AI verdicts with exact citations.</p>
+                </div>
+                <div class="rag-feature-card" data-hover>
+                    <div class="rf-icon">🛡️</div>
+                    <h3 class="rf-title">5 STRIDE Attack Detectors</h3>
+                    <p class="rf-desc">Microsecond rule engines inspect incoming payloads for <strong>Spoofing</strong> (unauthorized tags), <strong>Tampering</strong> (meter fraud), <strong>Repudiation</strong> (replayed IDs), <strong>Info Leak</strong> (plaintext tokens), and <strong>DoS</strong> (burst floods).</p>
+                </div>
+                <div class="rag-feature-card" data-hover>
+                    <div class="rf-icon">⚡</div>
+                    <h3 class="rf-title">Hybrid Orchestration</h3>
+                    <p class="rf-desc">LangGraph coordinates <code>detect → retrieve → reason</code>. If an LLM API key is missing or offline, the system seamlessly falls back to deterministic grounded synthesis without crashing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <div class="main-grid">
+
+            <!-- Left: Input -->
+            <div class="col-input">
+
+                <!-- Scenario Selector -->
+                <div class="section-label">Select a threat scenario</div>
+                <div class="scenario-row">
+                    <button class="chip chip-safe active-chip" onclick="loadSample('benign_authorize')" data-chip>
+                        <span class="chip-dot safe"></span>
+                        Normal Authorize
                     </button>
-                    <button class="btn btn-secondary" onclick="clearEditor()">Clear</button>
+                    <button class="chip chip-threat" onclick="loadSample('malicious_spoofing')" data-chip>
+                        <span class="chip-dot threat"></span>
+                        Spoofing
+                    </button>
+                    <button class="chip chip-threat" onclick="loadSample('malicious_tampering')" data-chip>
+                        <span class="chip-dot threat"></span>
+                        Tampering
+                    </button>
+                    <button class="chip chip-threat" onclick="loadSample('malicious_repudiation')" data-chip>
+                        <span class="chip-dot threat"></span>
+                        Repudiation
+                    </button>
+                    <button class="chip chip-threat" onclick="loadSample('malicious_info_disclosure')" data-chip>
+                        <span class="chip-dot threat"></span>
+                        Info Leak
+                    </button>
+                    <button class="chip chip-threat" onclick="loadSample('malicious_dos')" data-chip>
+                        <span class="chip-dot threat"></span>
+                        DoS Flood
+                    </button>
                 </div>
-            </section>
 
-            <!-- Right Column: Security Verdict Panel -->
-            <section class="panel output-panel">
-                <div class="panel-header">
-                    <h2>🔍 Security Verdict & Triage</h2>
-                    <span class="rag-badge">RAG Grounded</span>
+                <!-- JSON Editor -->
+                <div class="editor-card" data-hover>
+                    <div class="editor-top">
+                        <span class="editor-label">OCPP-J 1.6 Payload</span>
+                        <div class="editor-actions">
+                            <button class="action-btn" onclick="copyJson()">Copy</button>
+                            <button class="action-btn" onclick="formatJson()">Format</button>
+                            <button class="action-btn" onclick="clearEditor()">Clear</button>
+                        </div>
+                    </div>
+                    <textarea id="json-input" spellcheck="false" placeholder="Select a scenario above or paste a raw OCPP JSON message..."></textarea>
                 </div>
 
+                <!-- Analyze Button -->
+                <button class="btn-primary" id="analyze-btn" onclick="analyzeMessage()">
+                    <span id="btn-text">Analyze Message</span>
+                    <svg class="btn-arrow" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"/></svg>
+                </button>
+
+            </div>
+
+            <!-- Right: Results -->
+            <div class="col-results">
+
+                <!-- Placeholder State -->
                 <div id="results-placeholder" class="placeholder-state">
-                    <div class="placeholder-icon">🛡️</div>
-                    <h3>Ready for Triage</h3>
-                    <p>Select a preset scenario or paste an OCPP JSON message and click <strong>Analyze Message</strong> to see AI-powered security analysis.</p>
+                    <div class="placeholder-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="placeholder-title">Waiting for input</h3>
+                    <p class="placeholder-text">Select a scenario or paste a message to begin AI-powered security triage.</p>
                 </div>
 
-                <div id="results-container" class="results-content hidden">
-                    <!-- Verdict Banner -->
-                    <div class="verdict-banner" id="verdict-banner">
-                        <div class="verdict-icon" id="verdict-icon">❓</div>
-                        <div>
-                            <div class="verdict-title" id="verdict-title">PENDING</div>
-                            <div class="verdict-category" id="verdict-category">Checking...</div>
+                <!-- Active Results -->
+                <div id="results-container" class="hidden">
+
+                    <!-- Verdict Card -->
+                    <div class="verdict-card" id="verdict-card" data-hover>
+                        <div class="verdict-top">
+                            <div>
+                                <div class="verdict-label" id="verdict-label">VERDICT</div>
+                                <h2 class="verdict-title" id="verdict-title">Normal</h2>
+                            </div>
+                            <div class="gauge-ring" id="gauge-ring">
+                                <svg viewBox="0 0 36 36">
+                                    <path class="gauge-bg" d="M18 2.0845a15.9155 15.9155 0 010 31.831 15.9155 15.9155 0 010-31.831"/>
+                                    <path class="gauge-fill" id="gauge-fill" stroke-dasharray="95,100" d="M18 2.0845a15.9155 15.9155 0 010 31.831 15.9155 15.9155 0 010-31.831"/>
+                                </svg>
+                                <span class="gauge-pct" id="gauge-pct">95%</span>
+                            </div>
                         </div>
-                        <div class="confidence-badge" id="confidence-badge">--% Confidence</div>
+                        <p class="verdict-category" id="verdict-category">STRIDE: None</p>
                     </div>
 
-                    <!-- Details Card -->
-                    <div class="card detail-card">
-                        <h3>Plain-English Explanation</h3>
-                        <p class="reason-text" id="reason-text">Analysis output will appear here...</p>
+                    <!-- Explanation Card -->
+                    <div class="result-card" data-hover>
+                        <div class="card-label">Triage Report</div>
+                        <p class="card-body" id="reason-text">—</p>
                     </div>
 
-                    <!-- Source Citation Card -->
-                    <div class="card citation-card">
-                        <h3>📖 Grounding Knowledge Citation</h3>
-                        <div class="citation-box" id="citation-box">
-                            <span class="citation-icon">📌</span>
-                            <span id="citation-text">--</span>
+                    <!-- Citation Card -->
+                    <div class="result-card" data-hover>
+                        <div class="card-label-row">
+                            <span class="card-label">Grounding Citation</span>
+                            <button class="link-btn" onclick="openRagModal()">Inspect</button>
+                        </div>
+                        <div class="citation-box">
+                            <span class="citation-tag">ChromaDB</span>
+                            <span class="citation-ref" id="citation-text">—</span>
                         </div>
                     </div>
 
-                    <!-- Metadata Metrics -->
-                    <div class="metrics-grid">
-                        <div class="metric-box">
-                            <span class="metric-label">Processing Time</span>
-                            <span class="metric-value" id="metric-time">-- ms</span>
+                    <!-- Metrics -->
+                    <div class="metrics-strip">
+                        <div class="metric" data-hover>
+                            <span class="metric-label">Latency</span>
+                            <span class="metric-value" id="metric-time">—</span>
                         </div>
-                        <div class="metric-box">
-                            <span class="metric-label">Rule Triggered</span>
-                            <span class="metric-value" id="metric-rule">--</span>
+                        <div class="metric" data-hover>
+                            <span class="metric-label">Rule</span>
+                            <span class="metric-value" id="metric-rule">—</span>
                         </div>
+                        <div class="metric" data-hover>
+                            <span class="metric-label">Station</span>
+                            <span class="metric-value" id="metric-cp">—</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fleet Matrix -->
+        <section class="fleet-section">
+            <div class="section-label">Charger Fleet Status</div>
+            <div class="fleet-row">
+                <div class="fleet-card" id="cp-north" data-hover>
+                    <span class="fleet-dot green"></span>
+                    <div>
+                        <span class="fleet-name">CP-NORTH-01</span>
+                        <span class="fleet-type">Level 2 Dual</span>
                     </div>
                 </div>
-            </section>
-        </main>
+                <div class="fleet-card" id="cp-east" data-hover>
+                    <span class="fleet-dot green"></span>
+                    <div>
+                        <span class="fleet-name">CP-EAST-03</span>
+                        <span class="fleet-type">DC Fast Charger</span>
+                    </div>
+                </div>
+                <div class="fleet-card" id="cp-south" data-hover>
+                    <span class="fleet-dot green"></span>
+                    <div>
+                        <span class="fleet-name">CP-SOUTH-02</span>
+                        <span class="fleet-type">Level 2 Single</span>
+                    </div>
+                </div>
+                <div class="fleet-card" id="cp-west" data-hover>
+                    <span class="fleet-dot green"></span>
+                    <div>
+                        <span class="fleet-name">CP-WEST-04</span>
+                        <span class="fleet-type">DC Fast Charger</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audit Log -->
+        <section class="audit-section">
+            <div class="audit-header">
+                <span class="section-label">Audit Trail</span>
+                <div class="audit-actions">
+                    <input type="text" id="table-search" class="search-input" placeholder="Search..." onkeyup="filterAuditTable()">
+                    <button class="action-btn" onclick="exportAuditCsv()">Export CSV</button>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table class="audit-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Station</th>
+                            <th>Action</th>
+                            <th>Verdict</th>
+                            <th>Category</th>
+                            <th>Latency</th>
+                            <th>Summary</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-table-body">
+                        <tr class="empty-row">
+                            <td colspan="7">No events yet. Analyze a message to begin.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- RAG Modal -->
+    <div id="rag-modal" class="modal-overlay hidden" onclick="closeRagModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <div class="modal-top">
+                <h3>RAG Vector Inspector</h3>
+                <button class="modal-close" onclick="closeRagModal()">&#10005;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <span class="ms-label">Embedding</span>
+                        <span class="ms-value">all-MiniLM-L6-v2</span>
+                    </div>
+                    <div class="modal-stat">
+                        <span class="ms-label">Metric</span>
+                        <span class="ms-value">Cosine Similarity</span>
+                    </div>
+                    <div class="modal-stat">
+                        <span class="ms-label">Store</span>
+                        <span class="ms-value">ChromaDB</span>
+                    </div>
+                </div>
+                <div class="modal-field-label">Source</div>
+                <div class="modal-source" id="modal-source-tag">—</div>
+                <div class="modal-field-label">Retrieved Context</div>
+                <pre class="modal-pre" id="modal-content-box">—</pre>
+            </div>
+        </div>
     </div>
 
     <script src="/static/app.js"></script>
