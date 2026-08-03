@@ -195,7 +195,7 @@ def index_knowledge_base(
     if force_reindex:
         try:
             client.delete_collection(COLLECTION_NAME)
-            print(f"🗑️  Deleted existing collection '{COLLECTION_NAME}'")
+            print(f"[DELETE] Deleted existing collection '{COLLECTION_NAME}'")
         except ValueError:
             pass  # Collection didn't exist, that's fine
 
@@ -212,28 +212,28 @@ def index_knowledge_base(
 
     # Check if already indexed (skip if collection has documents)
     if collection.count() > 0 and not force_reindex:
-        print(f"✅ Collection '{COLLECTION_NAME}' already has {collection.count()} chunks. Skipping indexing.")
+        print(f"[OK] Collection '{COLLECTION_NAME}' already has {collection.count()} chunks. Skipping indexing.")
         print("   (Use force_reindex=True to rebuild)")
         return collection
 
     # ---- Step 1: Load documents ----
-    print(f"📂 Loading documents from: {kb_dir}")
+    print(f"[LOAD] Loading documents from: {kb_dir}")
     documents = load_markdown_files(kb_dir)
     print(f"   Found {len(documents)} documents")
 
     if not documents:
-        print("⚠️  No documents found! Check the knowledge base directory.")
+        print("[WARN] No documents found! Check the knowledge base directory.")
         return collection
 
     # ---- Step 2: Split into chunks ----
-    print(f"✂️  Splitting into chunks (size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})")
+    print(f"[SPLIT] Splitting into chunks (size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})")
     texts, metadatas, ids = split_into_chunks(documents)
     print(f"   Created {len(texts)} chunks")
 
     # ---- Step 3: Add to ChromaDB ----
     # ChromaDB automatically computes embeddings for each text chunk
     # using its default embedding model.
-    print(f"🧠 Indexing {len(texts)} chunks into ChromaDB...")
+    print(f"[INDEX] Indexing {len(texts)} chunks into ChromaDB...")
 
     # ChromaDB has a batch size limit, so we add in batches
     BATCH_SIZE = 100
@@ -245,10 +245,10 @@ def index_knowledge_base(
             ids=ids[i:batch_end],
         )
 
-    print(f"✅ Successfully indexed {collection.count()} chunks into '{COLLECTION_NAME}'")
+    print(f"[OK] Successfully indexed {collection.count()} chunks into '{COLLECTION_NAME}'")
 
     # Print a summary of what was indexed
-    print("\n📊 Index Summary:")
+    print("\n[SUMMARY] Index Summary:")
     for doc in documents:
         print(f"   [{doc['category']}] {doc['source']}")
 

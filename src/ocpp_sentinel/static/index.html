@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCPP Sentinel — AI Security Triage Copilot</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="navbar">
+            <div class="brand">
+                <span class="shield-icon">🛡️</span>
+                <div>
+                    <h1>OCPP Sentinel</h1>
+                    <p class="subtitle">AI Security Triage Copilot for EV Charging Stations</p>
+                </div>
+            </div>
+            <div class="status-badge" id="health-badge">
+                <span class="status-dot"></span>
+                <span id="health-text">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Main Dashboard -->
+        <main class="main-content">
+            <!-- Left Column: Input Panel & Preset Scenarios -->
+            <section class="panel input-panel">
+                <div class="panel-header">
+                    <h2>📥 OCPP Message Input</h2>
+                    <span class="spec-tag">OCPP 1.6-J</span>
+                </div>
+
+                <div class="presets-section">
+                    <p class="section-label">Select a Preset Scenario to Test:</p>
+                    <div class="preset-buttons">
+                        <button class="btn btn-preset" onclick="loadSample('benign_authorize')">✅ Benign Authorize</button>
+                        <button class="btn btn-preset" onclick="loadSample('benign_meter_values')">✅ Benign MeterValues</button>
+                        <button class="btn btn-preset attack" onclick="loadSample('malicious_spoofing')">⚠️ 1. Spoofing</button>
+                        <button class="btn btn-preset attack" onclick="loadSample('malicious_tampering')">⚠️ 2. Tampering</button>
+                        <button class="btn btn-preset attack" onclick="loadSample('malicious_repudiation')">⚠️ 3. Repudiation</button>
+                        <button class="btn btn-preset attack" onclick="loadSample('malicious_info_disclosure')">⚠️ 4. Info Disclosure</button>
+                        <button class="btn btn-preset attack" onclick="loadSample('malicious_dos')">⚠️ 5. DoS Flood</button>
+                    </div>
+                </div>
+
+                <div class="editor-container">
+                    <label for="json-input" class="section-label">OCPP Message Payload (JSON):</label>
+                    <textarea id="json-input" placeholder="Paste your OCPP message JSON here..." spellcheck="false"></textarea>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" id="analyze-btn" onclick="analyzeMessage()">
+                        <span id="btn-text">⚡ Analyze Message</span>
+                    </button>
+                    <button class="btn btn-secondary" onclick="clearEditor()">Clear</button>
+                </div>
+            </section>
+
+            <!-- Right Column: Security Verdict Panel -->
+            <section class="panel output-panel">
+                <div class="panel-header">
+                    <h2>🔍 Security Verdict & Triage</h2>
+                    <span class="rag-badge">RAG Grounded</span>
+                </div>
+
+                <div id="results-placeholder" class="placeholder-state">
+                    <div class="placeholder-icon">🛡️</div>
+                    <h3>Ready for Triage</h3>
+                    <p>Select a preset scenario or paste an OCPP JSON message and click <strong>Analyze Message</strong> to see AI-powered security analysis.</p>
+                </div>
+
+                <div id="results-container" class="results-content hidden">
+                    <!-- Verdict Banner -->
+                    <div class="verdict-banner" id="verdict-banner">
+                        <div class="verdict-icon" id="verdict-icon">❓</div>
+                        <div>
+                            <div class="verdict-title" id="verdict-title">PENDING</div>
+                            <div class="verdict-category" id="verdict-category">Checking...</div>
+                        </div>
+                        <div class="confidence-badge" id="confidence-badge">--% Confidence</div>
+                    </div>
+
+                    <!-- Details Card -->
+                    <div class="card detail-card">
+                        <h3>Plain-English Explanation</h3>
+                        <p class="reason-text" id="reason-text">Analysis output will appear here...</p>
+                    </div>
+
+                    <!-- Source Citation Card -->
+                    <div class="card citation-card">
+                        <h3>📖 Grounding Knowledge Citation</h3>
+                        <div class="citation-box" id="citation-box">
+                            <span class="citation-icon">📌</span>
+                            <span id="citation-text">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Metadata Metrics -->
+                    <div class="metrics-grid">
+                        <div class="metric-box">
+                            <span class="metric-label">Processing Time</span>
+                            <span class="metric-value" id="metric-time">-- ms</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-label">Rule Triggered</span>
+                            <span class="metric-value" id="metric-rule">--</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# =============================================================================
+# docker-compose.yml — Docker Compose service definition
+# =============================================================================
+
+version: '3.8'
+
+services:
+  ocpp-sentinel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ocpp-sentinel
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    volumes:
+      - ./logs:/app/logs
+      - ./data/chroma_db:/app/data/chroma_db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

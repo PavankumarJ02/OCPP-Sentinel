@@ -1,0 +1,16 @@
+# .dockerignore — Files to exclude from Docker build context
+
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+.git/
+.gitignore
+.env
+logs/*.jsonl
+data/chroma_db/

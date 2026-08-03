@@ -16,6 +16,7 @@ from ocpp_sentinel.models.ocpp_messages import (
     # The main message envelope
     OCPPMessage,
     AnalysisContext,
+    OCPPAction,
     # Individual payload types
     AuthorizePayload,
     BootNotificationPayload,
@@ -29,12 +30,10 @@ from ocpp_sentinel.models.ocpp_messages import (
     MeterValue,
 )
 
-# __all__ controls what gets exported when someone does:
-#     from ocpp_sentinel.models import *
-# It's good practice to define this explicitly.
 __all__ = [
     "OCPPMessage",
     "AnalysisContext",
+    "OCPPAction",
     "AuthorizePayload",
     "BootNotificationPayload",
     "StartTransactionPayload",

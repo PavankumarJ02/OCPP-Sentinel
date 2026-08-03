@@ -1,5 +1,5 @@
 {
-    "_comment": "MALICIOUS (Information Disclosure): A StatusNotification whose 'info' and 'vendorId' fields contain what looks like a plaintext idTag/session token. This could leak sensitive user credentials in diagnostic logs.",
+    "_comment": "MALICIOUS (Information Disclosure): A StatusNotification whose 'info' and 'vendorId' fields contain what looks like a plaintext idTag/session token.",
     "message_type_id": 2,
     "unique_id": "status-leak-001",
     "action": "StatusNotification",
@@ -8,7 +8,7 @@
         "errorCode": "OtherError",
         "status": "Faulted",
         "timestamp": "2024-01-15T16:00:00Z",
-        "info": "Auth failed for idTag=RFID-A1B2C3, token=sk_live_abc123def456",
+        "info": "Auth fail: idTag=RFID-A1B2C3, token=sk_live_abc123",
         "vendorId": "debug-session-token:eyJhbGciOiJIUzI1NiJ9.user_RFID-D4E5F6"
     },
     "charge_point_id": "CP-WEST-04",
