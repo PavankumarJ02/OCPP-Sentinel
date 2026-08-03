@@ -36,27 +36,27 @@
         <!-- Hero Section -->
         <section class="hero">
             <h1 class="hero-title">AI Security Triage<br>for EV Charging.</h1>
-            <p class="hero-subtitle">Analyze OCPP 1.6-J protocol messages against STRIDE threat patterns using hybrid rule engines and RAG-grounded vector retrieval.</p>
+            <p class="hero-subtitle">Real-time triage of OCPP 1.6-J protocol traffic against STRIDE threat vectors using deterministic rule engines and ChromaDB RAG vector search.</p>
         </section>
 
-        <!-- Architecture Pipeline Flowchart -->
+        <!-- Architecture & Flowchart Section -->
         <section class="arch-section">
-            <div class="section-label" style="text-align:center">Architecture</div>
+            <div class="section-label" style="text-align:center">System Architecture</div>
             <h2 class="arch-heading">Three-Stage AI Pipeline</h2>
-            <p class="arch-desc">Every OCPP message flows through a LangGraph state machine combining deterministic rule engines with neural vector search for grounded security verdicts.</p>
 
+            <!-- Flowchart Pipeline -->
             <div class="pipeline">
-                <div class="pipe-node pipe-input" data-hover>
+                <div class="pipe-node" data-hover>
                     <div class="pipe-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6M9 13h4"/></svg>
                     </div>
                     <div class="pipe-label">OCPP Message</div>
-                    <div class="pipe-sub">JSON Payload</div>
+                    <div class="pipe-sub">Raw Payload</div>
                 </div>
 
                 <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
 
-                <div class="pipe-node pipe-validate" data-hover>
+                <div class="pipe-node" data-hover>
                     <div class="pipe-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
@@ -66,82 +66,87 @@
 
                 <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
 
-                <div class="pipe-node pipe-detect" data-hover>
+                <div class="pipe-node" data-hover>
                     <div class="pipe-icon pipe-icon-blue">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
                     </div>
                     <div class="pipe-stage-tag">Stage 1</div>
                     <div class="pipe-label">Detect</div>
                     <div class="pipe-sub">5 STRIDE Rules</div>
-                    <div class="pipe-details">Spoofing · Tampering · Repudiation · Info Leak · DoS</div>
                 </div>
 
                 <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
 
-                <div class="pipe-node pipe-retrieve" data-hover>
+                <div class="pipe-node" data-hover>
                     <div class="pipe-icon pipe-icon-blue">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
                     </div>
                     <div class="pipe-stage-tag">Stage 2</div>
                     <div class="pipe-label">Retrieve</div>
-                    <div class="pipe-sub">ChromaDB Vector Store</div>
-                    <div class="pipe-details">70 indexed chunks · all-MiniLM-L6-v2 embeddings</div>
+                    <div class="pipe-sub">ChromaDB RAG</div>
                 </div>
 
                 <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
 
-                <div class="pipe-node pipe-reason" data-hover>
+                <div class="pipe-node" data-hover>
                     <div class="pipe-icon pipe-icon-blue">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2h-4a2 2 0 01-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 017-7z"/><path d="M10 21h4"/></svg>
                     </div>
                     <div class="pipe-stage-tag">Stage 3</div>
                     <div class="pipe-label">Reason</div>
-                    <div class="pipe-sub">Grounded Synthesis</div>
-                    <div class="pipe-details">Explanation · Confidence score · Source citation</div>
+                    <div class="pipe-sub">AI Synthesis</div>
                 </div>
 
                 <div class="pipe-connector"><div class="pipe-line"></div><div class="pipe-arrow">&#8250;</div></div>
 
-                <div class="pipe-node pipe-output" data-hover>
+                <div class="pipe-node" data-hover>
                     <div class="pipe-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                     </div>
                     <div class="pipe-label">Verdict</div>
-                    <div class="pipe-sub">JSON + Audit Trail</div>
+                    <div class="pipe-sub">Audit Trail</div>
                 </div>
             </div>
 
+            <!-- Balanced Tech Stack Pills -->
             <div class="tech-strip">
-                <span class="tech-tag highlight-rag">RAG Architecture</span>
+                <span class="tech-tag">RAG Architecture</span>
                 <span class="tech-tag">ChromaDB Vector Store</span>
                 <span class="tech-tag">LangGraph State Machine</span>
                 <span class="tech-tag">STRIDE Threat Model</span>
                 <span class="tech-tag">Python 3.11+</span>
                 <span class="tech-tag">FastAPI</span>
                 <span class="tech-tag">Pydantic V2</span>
-                <span class="tech-tag">70/70 Pytest Suite</span>
+                <span class="tech-tag">Pytest</span>
             </div>
 
+            <!-- Feature Cards with Matching Icons -->
             <div class="rag-features-grid">
                 <div class="rag-feature-card" data-hover>
-                    <div class="rf-icon">🧠</div>
-                    <h3 class="rf-title">RAG Grounded Retrieval</h3>
-                    <p class="rf-desc">Queries 70 indexed chunks of official OCPP 1.6-J specs and threat papers using <code>all-MiniLM-L6-v2</code> embeddings and cosine similarity. Guarantees zero-hallucination AI verdicts with exact citations.</p>
+                    <div class="rf-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    </div>
+                    <h3 class="rf-title">RAG Vector Grounding</h3>
+                    <p class="rf-desc">Queries 70 indexed chunks of official OCPP 1.6-J specs using <code>all-MiniLM-L6-v2</code> embeddings. Guarantees zero-hallucination verdicts with exact citations.</p>
                 </div>
                 <div class="rag-feature-card" data-hover>
-                    <div class="rf-icon">🛡️</div>
-                    <h3 class="rf-title">5 STRIDE Attack Detectors</h3>
-                    <p class="rf-desc">Microsecond rule engines inspect incoming payloads for <strong>Spoofing</strong> (unauthorized tags), <strong>Tampering</strong> (meter fraud), <strong>Repudiation</strong> (replayed IDs), <strong>Info Leak</strong> (plaintext tokens), and <strong>DoS</strong> (burst floods).</p>
+                    <div class="rf-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 class="rf-title">5 STRIDE Detectors</h3>
+                    <p class="rf-desc">Microsecond rule engines inspect payloads for Spoofing (fake tags), Tampering (meter fraud), Repudiation (replayed IDs), Info Leak, and DoS floods.</p>
                 </div>
                 <div class="rag-feature-card" data-hover>
-                    <div class="rf-icon">⚡</div>
-                    <h3 class="rf-title">Hybrid Orchestration</h3>
-                    <p class="rf-desc">LangGraph coordinates <code>detect → retrieve → reason</code>. If an LLM API key is missing or offline, the system seamlessly falls back to deterministic grounded synthesis without crashing.</p>
+                    <div class="rf-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3 class="rf-title">Hybrid State Machine</h3>
+                    <p class="rf-desc">LangGraph orchestrates <code>detect → retrieve → reason</code>. If an LLM API key is offline, the system seamlessly falls back to rule synthesis.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Main Content -->
+        <!-- Main Grid -->
         <div class="main-grid">
 
             <!-- Left: Input -->
