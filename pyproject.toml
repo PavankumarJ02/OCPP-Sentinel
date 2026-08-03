@@ -1,0 +1,90 @@
+# =============================================================================
+# pyproject.toml — Project metadata and dependencies for OCPP Sentinel
+# =============================================================================
+#
+# LEARNING NOTE:
+# pyproject.toml is the modern standard for Python project configuration.
+# It replaces the older setup.py/setup.cfg approach. Think of it as your
+# project's "birth certificate" — it tells Python (and tools like pip)
+# everything about your project: its name, version, dependencies, etc.
+#
+# PEP 621: https://peps.python.org/pep-0621/
+# =============================================================================
+
+[build-system]
+# These two lines tell pip HOW to build your project.
+# setuptools is the most common build backend.
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ocpp-sentinel"
+version = "0.1.0"
+description = "AI security triage copilot for EV charging stations using OCPP 1.6-J"
+readme = "README.md"
+requires-python = ">=3.11"
+
+# ---- Dependencies ----
+# These are the packages your project NEEDS to run.
+# pip will automatically install them when someone does `pip install -e .`
+dependencies = [
+    # Pydantic: Data validation library. We use it to define the "shape"
+    # of OCPP messages so Python can validate them automatically.
+    "pydantic>=2.0,<3.0",
+
+    # FastAPI: Modern web framework for building APIs. It uses Pydantic
+    # models for automatic request validation and documentation.
+    "fastapi>=0.110,<1.0",
+
+    # Uvicorn: The ASGI server that actually RUNS your FastAPI app.
+    # Think of FastAPI as the blueprint, uvicorn as the construction crew.
+    "uvicorn>=0.29,<1.0",
+
+    # ChromaDB: A vector database. It stores text as numerical "embeddings"
+    # (lists of numbers that capture meaning) so you can search by similarity.
+    "chromadb>=0.5,<1.0",
+
+    # LangChain: A framework for building LLM-powered applications.
+    # We use it for document loading, text splitting, and embeddings.
+    "langchain>=0.2,<1.0",
+    "langchain-community>=0.2,<1.0",
+
+    # LangGraph: Built on LangChain, this lets you define AI agents as
+    # state machines (graphs). Each "node" in the graph is a step the
+    # agent takes (detect → retrieve → reason).
+    "langgraph>=0.2,<1.0",
+
+    # LLM providers — we support both, you configure which one to use.
+    "langchain-openai>=0.1,<1.0",
+    "langchain-anthropic>=0.1,<1.0",
+
+    # python-dotenv: Loads environment variables from a .env file.
+    # This is how we keep API keys OUT of source code.
+    "python-dotenv>=1.0,<2.0",
+]
+
+# ---- Optional dependencies ----
+# These are extras you install with: pip install -e ".[dev]"
+# The [dev] group is for development tools you don't need in production.
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0,<9.0",          # Test framework
+    "pytest-asyncio>=0.23,<1.0", # Async test support (FastAPI is async)
+    "httpx>=0.27,<1.0",          # HTTP client for testing API endpoints
+    "ruff>=0.4,<1.0",            # Fast Python linter & formatter
+]
+
+# ---- Package discovery ----
+# Tells setuptools WHERE to find your Python code.
+# "src" layout is a best practice — it prevents accidental imports
+# from the project root.
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# ---- Pytest configuration ----
+# Tells pytest where to find tests and how to run them.
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# asyncio_mode = "auto" means pytest-asyncio will automatically handle
+# async test functions without needing @pytest.mark.asyncio on each one.
+asyncio_mode = "auto"

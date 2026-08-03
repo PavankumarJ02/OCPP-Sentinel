@@ -1,0 +1,18 @@
+{
+    "_comment": "MALICIOUS (Spoofing): RemoteStartTransaction with an idTag that was NEVER authorized. An attacker is trying to start a free charging session remotely.",
+    "message_type_id": 2,
+    "unique_id": "remote-start-666",
+    "action": "RemoteStartTransaction",
+    "payload": {
+        "idTag": "FAKE-TAG-999",
+        "connectorId": 1
+    },
+    "charge_point_id": "CP-NORTH-01",
+    "received_at": "2024-01-15T14:00:00Z",
+    "context": {
+        "authorized_id_tags": ["RFID-A1B2C3", "RFID-D4E5F6", "RFID-G7H8I9"],
+        "known_message_ids": [],
+        "recent_message_count": 2,
+        "time_window_seconds": 60
+    }
+}

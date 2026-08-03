@@ -1,0 +1,42 @@
+{
+    "_comment": "MALICIOUS (Tampering): MeterValues reporting only 50 Wh (0.05 kWh) over 2 hours of 'charging'. A real Level 2 charger delivers 7-19 kWh/hr. This is billing fraud — the charger (or an attacker) is under-reporting energy to reduce the bill.",
+    "message_type_id": 2,
+    "unique_id": "meter-tamper-001",
+    "action": "MeterValues",
+    "payload": {
+        "connectorId": 1,
+        "transactionId": 1002,
+        "meterValue": [
+            {
+                "timestamp": "2024-01-15T12:00:00Z",
+                "sampledValue": [
+                    {
+                        "value": "1000",
+                        "measurand": "Energy.Active.Import.Register",
+                        "unit": "Wh",
+                        "context": "Transaction.Begin"
+                    }
+                ]
+            },
+            {
+                "timestamp": "2024-01-15T14:00:00Z",
+                "sampledValue": [
+                    {
+                        "value": "1050",
+                        "measurand": "Energy.Active.Import.Register",
+                        "unit": "Wh",
+                        "context": "Sample.Periodic"
+                    }
+                ]
+            }
+        ]
+    },
+    "charge_point_id": "CP-EAST-03",
+    "received_at": "2024-01-15T14:00:05Z",
+    "context": {
+        "authorized_id_tags": [],
+        "known_message_ids": [],
+        "recent_message_count": 4,
+        "time_window_seconds": 60
+    }
+}

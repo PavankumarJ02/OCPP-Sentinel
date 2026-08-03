@@ -1,0 +1,17 @@
+{
+    "_comment": "MALICIOUS (Repudiation): This Authorize message has a unique_id that was ALREADY used in a previous request. Someone is replaying a captured Authorize message to start a second free charging session without the real card being present.",
+    "message_type_id": 2,
+    "unique_id": "auth-001",
+    "action": "Authorize",
+    "payload": {
+        "idTag": "RFID-A1B2C3"
+    },
+    "charge_point_id": "CP-SOUTH-02",
+    "received_at": "2024-01-15T15:45:00Z",
+    "context": {
+        "authorized_id_tags": ["RFID-A1B2C3", "RFID-D4E5F6"],
+        "known_message_ids": ["auth-001", "start-001", "meter-001"],
+        "recent_message_count": 2,
+        "time_window_seconds": 60
+    }
+}

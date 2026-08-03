@@ -1,0 +1,20 @@
+{
+    "_comment": "BENIGN: Normal StartTransaction — the idTag matches a prior Authorize and is in the authorized list.",
+    "message_type_id": 2,
+    "unique_id": "start-001",
+    "action": "StartTransaction",
+    "payload": {
+        "connectorId": 1,
+        "idTag": "RFID-A1B2C3",
+        "meterStart": 100,
+        "timestamp": "2024-01-15T10:30:30Z"
+    },
+    "charge_point_id": "CP-NORTH-01",
+    "received_at": "2024-01-15T10:30:32Z",
+    "context": {
+        "authorized_id_tags": ["RFID-A1B2C3", "RFID-D4E5F6"],
+        "known_message_ids": [],
+        "recent_message_count": 3,
+        "time_window_seconds": 60
+    }
+}

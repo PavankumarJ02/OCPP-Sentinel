@@ -1,0 +1,20 @@
+{
+    "_comment": "MALICIOUS (DoS): This StatusNotification is itself normal, but the context shows 150 messages from this charge point in the last 60 seconds. Normal chargers send maybe 5-10 per minute. This is a flood designed to overwhelm the CSMS.",
+    "message_type_id": 2,
+    "unique_id": "status-flood-150",
+    "action": "StatusNotification",
+    "payload": {
+        "connectorId": 1,
+        "errorCode": "NoError",
+        "status": "Available",
+        "timestamp": "2024-01-15T17:00:00Z"
+    },
+    "charge_point_id": "CP-NORTH-01",
+    "received_at": "2024-01-15T17:00:01Z",
+    "context": {
+        "authorized_id_tags": [],
+        "known_message_ids": [],
+        "recent_message_count": 150,
+        "time_window_seconds": 60
+    }
+}

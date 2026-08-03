@@ -1,0 +1,42 @@
+{
+    "_comment": "BENIGN: Normal MeterValues — 7.5 kWh delivered over 1 hour is realistic for a Level 2 charger.",
+    "message_type_id": 2,
+    "unique_id": "meter-001",
+    "action": "MeterValues",
+    "payload": {
+        "connectorId": 1,
+        "transactionId": 1001,
+        "meterValue": [
+            {
+                "timestamp": "2024-01-15T10:30:00Z",
+                "sampledValue": [
+                    {
+                        "value": "100",
+                        "measurand": "Energy.Active.Import.Register",
+                        "unit": "Wh",
+                        "context": "Transaction.Begin"
+                    }
+                ]
+            },
+            {
+                "timestamp": "2024-01-15T11:30:00Z",
+                "sampledValue": [
+                    {
+                        "value": "7600",
+                        "measurand": "Energy.Active.Import.Register",
+                        "unit": "Wh",
+                        "context": "Sample.Periodic"
+                    }
+                ]
+            }
+        ]
+    },
+    "charge_point_id": "CP-NORTH-01",
+    "received_at": "2024-01-15T11:30:05Z",
+    "context": {
+        "authorized_id_tags": [],
+        "known_message_ids": [],
+        "recent_message_count": 5,
+        "time_window_seconds": 60
+    }
+}

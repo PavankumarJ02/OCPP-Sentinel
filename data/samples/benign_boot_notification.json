@@ -1,0 +1,20 @@
+{
+    "_comment": "BENIGN: A normal BootNotification — charger telling the CSMS it just powered on.",
+    "message_type_id": 2,
+    "unique_id": "boot-001",
+    "action": "BootNotification",
+    "payload": {
+        "chargePointVendor": "VoltWave",
+        "chargePointModel": "VW-DC-50",
+        "chargePointSerialNumber": "VW2024-SN-00142",
+        "firmwareVersion": "3.2.1"
+    },
+    "charge_point_id": "CP-NORTH-01",
+    "received_at": "2024-01-15T08:00:00Z",
+    "context": {
+        "authorized_id_tags": [],
+        "known_message_ids": [],
+        "recent_message_count": 1,
+        "time_window_seconds": 60
+    }
+}
