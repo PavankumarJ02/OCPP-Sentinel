@@ -93,13 +93,27 @@ let currentAnalysisData = null;
 document.addEventListener("DOMContentLoaded", () => {
     startClock();
     checkHealth();
+    initCursorLight();
 });
+
+function initCursorLight() {
+    const light = document.getElementById("cursor-light");
+    if (!light) return;
+    window.addEventListener("mousemove", (e) => {
+        light.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+}
 
 function startClock() {
     const el = document.getElementById("live-clock");
-    setInterval(() => {
-        el.textContent = new Date().toUTCString().split(" ")[4] + " UTC";
-    }, 1000);
+    const update = () => {
+        if (el) {
+            const now = new Date();
+            el.textContent = now.toLocaleTimeString();
+        }
+    };
+    update();
+    setInterval(update, 1000);
 }
 
 async function checkHealth() {
@@ -117,11 +131,15 @@ async function checkHealth() {
 function loadSample(key) {
     // Update active chip
     document.querySelectorAll("[data-chip]").forEach(c => c.classList.remove("active-chip"));
-    event.currentTarget.classList.add("active-chip");
+    if (window.event && window.event.currentTarget) {
+        window.event.currentTarget.classList.add("active-chip");
+    }
 
     const data = PRESET_MESSAGES[key];
     if (data) {
-        document.getElementById("json-input").value = JSON.stringify(data, null, 2);
+        const sample = JSON.parse(JSON.stringify(data));
+        sample.received_at = new Date().toISOString();
+        document.getElementById("json-input").value = JSON.stringify(sample, null, 2);
     }
 }
 
