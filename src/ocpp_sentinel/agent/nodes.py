@@ -88,7 +88,7 @@ def retrieve_node(state: AgentState) -> dict[str, Any]:
         query_text = f"{message.action.value} security analysis authorization specification"
 
     # Fetch top matches for both categories
-    combined = retriever.query_combined(query_text, n_attack_results=2, n_spec_results=2)
+    combined = retriever.query_combined(query_text, n_attack_results=3, n_spec_results=3)
 
     retrieved_attacks = [
         {"text": r.text, "source": r.source, "score": r.relevance_score}
@@ -168,7 +168,11 @@ def _reason_with_rag_fallback(
         verdict="normal",
         matched_attack_category="None",
         confidence=0.95,
-        plain_english_reason=f"Message '{message.action.value}' (ID: {message.unique_id}) passed all rule-based checks with normal operational parameters.",
+        plain_english_reason=(
+            f"Message '{message.action.value}' (ID: {message.unique_id}) from charge point "
+            f"'{message.charge_point_id}' passed all 5 STRIDE rule-based security checks with "
+            f"normal operational parameters. No anomalies detected."
+        ),
         source_reference=spec_source,
         rule_detected=False,
     )
@@ -222,6 +226,11 @@ Your task: Return a JSON verdict with:
         structured_llm = llm.with_structured_output(VerdictResponse)
         verdict = structured_llm.invoke(prompt)
         return verdict
-    except Exception:
-        # Fallback to grounded synthesis if LLM API call fails
+    except Exception as exc:
+        # Log the specific failure and fall back to grounded synthesis
+        import logging as _logging
+        _logging.getLogger("ocpp_sentinel").warning(
+            f"LLM structured output failed ({type(exc).__name__}: {exc}). "
+            "Falling back to RAG-grounded synthesis."
+        )
         return _reason_with_rag_fallback(message, detection, attacks, specs)

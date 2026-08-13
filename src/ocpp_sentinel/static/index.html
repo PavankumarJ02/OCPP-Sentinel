@@ -54,6 +54,30 @@
                 deterministic rule engines and ChromaDB RAG vector search.</p>
         </section>
 
+        <!-- Stats Dashboard Strip -->
+        <div class="stats-strip" id="stats-strip">
+            <div class="stat-card is-blue-stat">
+                <span class="stat-label" data-tooltip="Total messages analyzed since server start">Total Analyzed</span>
+                <span class="stat-value" id="stat-total">—</span>
+                <span class="stat-sublabel">messages</span>
+            </div>
+            <div class="stat-card is-threat-stat">
+                <span class="stat-label" data-tooltip="Suspicious STRIDE threats detected">Threats Detected</span>
+                <span class="stat-value" id="stat-threats">—</span>
+                <span class="stat-sublabel">suspicious</span>
+            </div>
+            <div class="stat-card is-safe-stat">
+                <span class="stat-label" data-tooltip="Benign messages that passed all checks">Normal</span>
+                <span class="stat-value" id="stat-normal">—</span>
+                <span class="stat-sublabel">benign</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label" data-tooltip="Rolling average analysis latency">Avg Latency</span>
+                <span class="stat-value" id="stat-latency">—</span>
+                <span class="stat-sublabel">ms</span>
+            </div>
+        </div>
+
         <!-- Architecture & Flowchart Section -->
         <section class="arch-section">
             <div class="section-label" style="text-align:center">System Architecture</div>
@@ -265,6 +289,7 @@
                             d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" />
                     </svg>
                 </button>
+                <p class="shortcut-hint">Press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to analyze</p>
 
             </div>
 
@@ -388,6 +413,7 @@
                 <div class="audit-actions">
                     <input type="text" id="table-search" class="search-input" placeholder="Search..."
                         onkeyup="filterAuditTable()">
+                    <button class="action-btn" onclick="loadAuditHistory()" data-tooltip="Load persisted audit events from server">Load History</button>
                     <button class="action-btn" onclick="exportAuditCsv()">Export CSV</button>
                 </div>
             </div>
@@ -446,6 +472,9 @@
     </div>
 
     <script src="/static/app.js"></script>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
 </body>
 
 </html>

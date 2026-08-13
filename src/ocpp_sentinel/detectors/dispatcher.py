@@ -52,3 +52,18 @@ class DetectorDispatcher:
             if res.detected:
                 return res
         return None
+
+    def run_all_with_scores(self, message: OCPPMessage) -> dict[str, "DetectionResult"]:
+        """
+        Run all applicable detectors and return a mapping of attack_category → DetectionResult
+        for every detector that was evaluated.
+
+        This method provides a full picture of all detector outcomes (not just the first hit),
+        which is useful for future multi-threat reporting, dashboards, and analytics.
+
+        Returns:
+            Dict mapping attack_category strings to their DetectionResult.
+        """
+        results = self.run_all(message)
+        return {result.attack_category: result for result in results}
+
