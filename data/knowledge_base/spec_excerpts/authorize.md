@@ -37,3 +37,5 @@ whether an `idTag` is authorized to start a charging session.
   authorize a session.
 - Replay protection depends on tracking `uniqueId` values.
 - Without TLS (wss://), the `idTag` is transmitted in plaintext.
+
+commit **1**
