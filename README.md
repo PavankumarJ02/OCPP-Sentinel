@@ -21,7 +21,7 @@
 [Quickstart](#-quickstart-guide) •
 [API Docs](#-api-reference) •
 [Demo UI](#-interactive-demo-web-ui)
-live acan gi 
+
 ---
 
 </div>
