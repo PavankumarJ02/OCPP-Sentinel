@@ -102,7 +102,7 @@ def test_agent_malicious_dos():
 def test_agent_malformed_input():
     bad_data = {"invalid": "data"}
     verdict: VerdictResponse = run_sentinel_agent(bad_data)
-
+hi this project idia
     assert verdict.verdict == "suspicious"
     assert verdict.matched_attack_category == "Malformed Input"
     assert "validation" in verdict.plain_english_reason.lower()
